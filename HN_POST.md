@@ -34,7 +34,7 @@ The biggest wins are screenshots — a Wikipedia page screenshot is 91,800 MCP t
 The SDK is TypeScript, the Chrome server has 14 tools, and there's an MCP-compatible stdio wrapper so you can use it with Claude Desktop or Cursor today with zero migration.
 
 GitHub: https://github.com/hchihoub/axon-protocol
-npm: `npm install @axon-protocol/sdk`
+npm: `npm install @axon-protocol/sdk` · `npm install @axon-protocol/chrome-server`
 
 Limitations we're upfront about: the "research quality" comparison in the blog is simulated (we measure real bytes but quality scoring is theoretical). OCRS adds complexity. read_page falls back to error summaries on some sites. The project is early (v0.1.0). We'd love feedback from anyone building agent tooling.
 

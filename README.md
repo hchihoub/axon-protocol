@@ -19,25 +19,31 @@ Unforgeable tokens with scope globs, TTL expiry, and attenuation. MCP has no too
 
 ## Benchmark Results
 
-Real measurements against live public websites (example.com, Wikipedia, httpbin.org):
+Real measurements from 26 Puppeteer tool calls against live public websites (example.com, Wikipedia, httpbin.org):
 
 | Metric | MCP | AXON | Improvement |
 |--------|-----|------|-------------|
-| Context tokens | ~495K | ~1.6K | 99.7% reduction |
-| Wire size | ~1.9MB | ~8KB | 99.6% reduction |
+| Context tokens | 266,660 | 720 | 99.7% reduction |
+| Full session context | 271,578 | 1,121 | 99.6% reduction |
+| Context window fit? | NO (147%) | YES (0.6%) | Fits 165x over |
+| Wire size | 1,024 KB | 4 KB | 99.6% reduction |
 | Security checks | 0/8 | 8/8 | Full coverage |
+
+## Install
+
+```bash
+# SDK — core protocol, OCRS, capability auth, MCP bridge
+npm install @axon-protocol/sdk
+
+# Chrome Server — 14 browser automation tools with OCRS integration
+npm install @axon-protocol/chrome-server
+```
+
+**npm:** [`@axon-protocol/sdk`](https://www.npmjs.com/package/@axon-protocol/sdk) · [`@axon-protocol/chrome-server`](https://www.npmjs.com/package/@axon-protocol/chrome-server)
 
 ## Quick Start
 
-```bash
-# Install the SDK
-npm install @axon-protocol/sdk
-
-# Use as MCP server with Claude Desktop
-npx @axon-protocol/chrome-server
-```
-
-### Claude Desktop Configuration
+### Use as MCP Server with Claude Desktop
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
@@ -46,7 +52,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "axon-chrome": {
       "command": "npx",
-      "args": ["tsx", "/path/to/axon-protocol/servers/chrome/src/mcp-stdio.ts"],
+      "args": ["tsx", "node_modules/@axon-protocol/chrome-server/src/mcp-stdio.ts"],
       "env": {
         "AXON_HEADLESS": "false"
       }
@@ -55,10 +61,18 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-### Claude Code Configuration
+### Use with Claude Code
 
 ```bash
-claude mcp add axon-chrome -- npx tsx /path/to/axon-protocol/servers/chrome/src/mcp-stdio.ts
+claude mcp add axon-chrome -- npx tsx node_modules/@axon-protocol/chrome-server/src/mcp-stdio.ts
+```
+
+### Use with Cursor / Windsurf
+
+Any MCP-compatible client works — point it at the stdio wrapper:
+
+```bash
+npx tsx node_modules/@axon-protocol/chrome-server/src/mcp-stdio.ts
 ```
 
 ## Project Structure

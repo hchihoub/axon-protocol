@@ -1286,14 +1286,77 @@ call("scroll", { tabId: 3, direction: "down", amount: 800 })
     When it needs detail, it does a surgical drill-down. The context window
     stays clean. The research quality stays at 100%.
   </p>
+</section>
 
-  <div class="callout">
+<!-- Get Started CTA -->
+<section class="animate-in">
+  <h2>Get Started</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px">
+      <h4 style="color:var(--accent2);margin-bottom:12px;font-size:1rem">SDK — Core Protocol</h4>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px">
+        OCRS, capability-based security, 3-tier discovery, MCP bridge, binary framing, stream multiplexer.
+      </p>
+      <pre style="margin:0;font-size:0.85rem"><code>npm install @axon-protocol/sdk</code></pre>
+      <div style="margin-top:12px;display:flex;gap:12px">
+        <a href="https://www.npmjs.com/package/@axon-protocol/sdk" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--accent2);text-decoration:none">npm &rarr;</a>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px">
+      <h4 style="color:var(--accent2);margin-bottom:12px;font-size:1rem">Chrome Server — Browser Automation</h4>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px">
+        14 Puppeteer-powered tools with OCRS integration. Drop-in MCP compatibility for Claude Desktop, Cursor, and more.
+      </p>
+      <pre style="margin:0;font-size:0.85rem"><code>npm install @axon-protocol/chrome-server</code></pre>
+      <div style="margin-top:12px;display:flex;gap:12px">
+        <a href="https://www.npmjs.com/package/@axon-protocol/chrome-server" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--accent2);text-decoration:none">npm &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px">
+    <h4 style="color:var(--accent2);margin-bottom:12px;font-size:1rem">Use with Claude Desktop</h4>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">
+      Add to <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>:
+    </p>
+    <pre style="margin:0;font-size:0.82rem"><code>{
+  "mcpServers": {
+    "axon-chrome": {
+      "command": "npx",
+      "args": ["tsx", "node_modules/@axon-protocol/chrome-server/src/mcp-stdio.ts"],
+      "env": { "AXON_HEADLESS": "false" }
+    }
+  }
+}</code></pre>
+  </div>
+
+  <div style="margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px">
+    <h4 style="color:var(--accent2);margin-bottom:12px;font-size:1rem">Use with Claude Code</h4>
+    <pre style="margin:0;font-size:0.82rem"><code>claude mcp add axon-chrome -- npx tsx node_modules/@axon-protocol/chrome-server/src/mcp-stdio.ts</code></pre>
+  </div>
+
+  <div class="callout" style="margin-top:28px">
     <div class="callout-title">AXON is open source</div>
     <p style="margin:0">
       The full AXON Protocol specification, SDK, MCP bridge, Chrome server, and these benchmarks
-      are available at <code>axon-protocol/</code>. The MCP-compatible stdio wrapper means you can
+      are available on GitHub. The MCP-compatible stdio wrapper means you can
       use AXON today with any MCP client — zero migration cost.
     </p>
+    <div style="margin-top:16px;display:flex;gap:16px;flex-wrap:wrap">
+      <a href="https://github.com/hchihoub/axon-protocol" target="_blank" rel="noopener"
+        style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem">
+        GitHub Repository &rarr;
+      </a>
+      <a href="https://www.npmjs.com/package/@axon-protocol/sdk" target="_blank" rel="noopener"
+        style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--accent2);border:1px solid var(--accent);border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem">
+        @axon-protocol/sdk on npm
+      </a>
+      <a href="https://www.npmjs.com/package/@axon-protocol/chrome-server" target="_blank" rel="noopener"
+        style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:transparent;color:var(--accent2);border:1px solid var(--accent);border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem">
+        @axon-protocol/chrome-server on npm
+      </a>
+    </div>
   </div>
 </section>
 
