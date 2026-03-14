@@ -1,0 +1,57 @@
+{
+  "name": "@axon-protocol/clipboard-server",
+  "version": "0.1.0",
+  "description": "AXON Clipboard History Server — Cross-platform clipboard management with history, search, and pinning via system commands",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "axon-clipboard": "src/mcp-stdio.ts"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "npx tsx src/index.ts",
+    "mcp": "npx tsx src/mcp-stdio.ts",
+    "dev": "npx tsx --watch src/index.ts"
+  },
+  "keywords": [
+    "axon",
+    "clipboard",
+    "history",
+    "pbcopy",
+    "pbpaste",
+    "xclip",
+    "mcp",
+    "ai-agent",
+    "tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hchihoub/axon-protocol.git",
+    "directory": "servers/clipboard"
+  },
+  "homepage": "https://github.com/hchihoub/axon-protocol#readme",
+  "author": "AXON Protocol Contributors",
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {
+    "@axon-protocol/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0"
+  }
+}

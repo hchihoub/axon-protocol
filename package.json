@@ -6,7 +6,21 @@
   "type": "module",
   "workspaces": [
     "sdk",
-    "servers/chrome"
+    "servers/chrome",
+    "servers/password-manager",
+    "servers/bookmarks-manager",
+    "servers/history-analyzer",
+    "servers/extensions-manager",
+    "servers/tab-session-manager",
+    "servers/cookie-manager",
+    "servers/filesystem",
+    "servers/git-repo",
+    "servers/clipboard",
+    "servers/screenshot",
+    "servers/system-monitor",
+    "servers/ssh-keys",
+    "servers/env-vault",
+    "servers/network-scanner"
   ],
   "scripts": {
     "test": "cd sdk && npm test",

@@ -1,0 +1,60 @@
+{
+  "name": "@axon-protocol/bookmarks-manager-server",
+  "version": "0.1.0",
+  "description": "AXON Bookmarks Manager Server — Automate Chrome's built-in bookmarks manager via Puppeteer with Shadow DOM piercing and OCRS integration",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "axon-bookmarks": "src/mcp-stdio.ts"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "npx tsx src/index.ts",
+    "mcp": "npx tsx src/mcp-stdio.ts",
+    "dev": "npx tsx --watch src/index.ts"
+  },
+  "keywords": [
+    "axon",
+    "bookmarks",
+    "chrome",
+    "browser",
+    "automation",
+    "puppeteer",
+    "mcp",
+    "ai-agent",
+    "tools",
+    "shadow-dom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hchihoub/axon-protocol.git",
+    "directory": "servers/bookmarks-manager"
+  },
+  "homepage": "https://github.com/hchihoub/axon-protocol#readme",
+  "author": "AXON Protocol Contributors",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  },
+  "peerDependencies": {
+    "@axon-protocol/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0"
+  }
+}
