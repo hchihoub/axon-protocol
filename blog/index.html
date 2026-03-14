@@ -497,7 +497,8 @@
   <div class="badge">AXON Protocol v0.1.0</div>
   <h1>MCP Can't Scale for Browser Automation</h1>
   <p class="subtitle">
-    We benchmarked AXON against MCP on a real-world Chrome automation scenario.
+    We benchmarked AXON against MCP using <strong>real Puppeteer sessions</strong> against live public websites
+    (example.com, Wikipedia, httpbin.org). 26 tool calls. Actual bytes measured.
     The results expose a fundamental architectural flaw in how MCP handles tool results.
   </p>
 </div>
@@ -513,7 +514,7 @@
     <span class="label">Quality Score</span>
   </div>
   <div class="stat-card">
-    <span class="number">247%</span>
+    <span class="number">147%</span>
     <span class="label">MCP Overflow</span>
   </div>
   <div class="stat-card">
@@ -576,8 +577,9 @@
 
   <h3>Two Protocols, Same Task</h3>
   <p>
-    We ran this scenario through both MCP (the real Claude-in-Chrome tool definitions, 18 tools)
-    and AXON (our Chrome server, 14 tools). Same browser actions, same data collected.
+    We ran a real Puppeteer benchmark against live public websites (example.com, Wikipedia, httpbin.org)
+    with 26 tool calls — navigating, taking screenshots, extracting text, reading DOM trees, executing JavaScript, scrolling, and finding elements.
+    MCP uses 18 tool schemas; AXON uses 14 compact manifests. Same browser actions, same data collected.
     The only difference: how results are handled.
   </p>
 </section>
@@ -610,27 +612,27 @@
   </div>
 
   <h3>Result Tokens by Category</h3>
-  <p>Where MCP really breaks down: the results. Here's the token cost breakdown across all 44 tool calls.</p>
+  <p>Where MCP really breaks down: the results. Here's the token cost breakdown across all 26 tool calls against live websites.</p>
 
   <div class="chart-container">
-    <div class="chart-title">Result Context Tokens by Category</div>
+    <div class="chart-title">Result Context Tokens by Category (Real Measurements)</div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot mcp"></div> MCP</div>
       <div class="legend-item"><div class="legend-dot axon"></div> AXON</div>
     </div>
 
     <div class="compare-group">
-      <div class="compare-label">Screenshots (8 calls)</div>
+      <div class="compare-label">Screenshots (5 calls)</div>
       <div class="compare-bars">
         <div class="compare-bar">
           <div class="proto">MCP</div>
           <div class="track"><div class="fill" style="width:100%;background:var(--red)"></div></div>
-          <div class="val" style="color:var(--red)">475,266</div>
+          <div class="val" style="color:var(--red)">250,307</div>
         </div>
         <div class="compare-bar">
           <div class="proto">AXON</div>
           <div class="track"><div class="fill" style="width:0.04%;background:var(--accent);min-width:3px"></div></div>
-          <div class="val" style="color:var(--green)">183</div>
+          <div class="val" style="color:var(--green)">109</div>
         </div>
       </div>
     </div>
@@ -641,44 +643,44 @@
         <div class="compare-bar">
           <div class="proto">MCP</div>
           <div class="track"><div class="fill" style="width:100%;background:var(--red)"></div></div>
-          <div class="val" style="color:var(--red)">6,034</div>
+          <div class="val" style="color:var(--red)">15,341</div>
         </div>
         <div class="compare-bar">
           <div class="proto">AXON</div>
-          <div class="track"><div class="fill" style="width:3.7%;background:var(--accent);min-width:3px"></div></div>
-          <div class="val" style="color:var(--green)">225</div>
+          <div class="track"><div class="fill" style="width:1.4%;background:var(--accent);min-width:3px"></div></div>
+          <div class="val" style="color:var(--green)">211</div>
         </div>
       </div>
     </div>
 
     <div class="compare-group">
-      <div class="compare-label">DOM Trees (5 calls)</div>
+      <div class="compare-label">DOM Trees (4 calls)</div>
       <div class="compare-bars">
         <div class="compare-bar">
           <div class="proto">MCP</div>
           <div class="track"><div class="fill" style="width:100%;background:var(--red)"></div></div>
-          <div class="val" style="color:var(--red)">5,571</div>
+          <div class="val" style="color:var(--red)">32</div>
         </div>
         <div class="compare-bar">
           <div class="proto">AXON</div>
-          <div class="track"><div class="fill" style="width:2.6%;background:var(--accent);min-width:3px"></div></div>
-          <div class="val" style="color:var(--green)">145</div>
+          <div class="track"><div class="fill" style="width:100%;background:var(--accent);min-width:3px"></div></div>
+          <div class="val" style="color:var(--green)">71</div>
         </div>
       </div>
     </div>
 
     <div class="compare-group">
-      <div class="compare-label">Other — nav, click, type, JS, find (27 calls)</div>
+      <div class="compare-label">Other — nav, scroll, JS eval, find (13 calls)</div>
       <div class="compare-bars">
         <div class="compare-bar">
           <div class="proto">MCP</div>
           <div class="track"><div class="fill" style="width:100%;background:var(--red)"></div></div>
-          <div class="val">3,240</div>
+          <div class="val">980</div>
         </div>
         <div class="compare-bar">
           <div class="proto">AXON</div>
-          <div class="track"><div class="fill" style="width:20%;background:var(--accent);min-width:3px"></div></div>
-          <div class="val" style="color:var(--green)">649</div>
+          <div class="track"><div class="fill" style="width:33.6%;background:var(--accent);min-width:3px"></div></div>
+          <div class="val" style="color:var(--green)">329</div>
         </div>
       </div>
     </div>
@@ -687,9 +689,9 @@
   <div class="callout">
     <div class="callout-title">Why screenshots dominate</div>
     <p style="margin:0">
-      A single 180KB PNG screenshot encodes to ~240KB of base64 text — roughly <strong>61,000 tokens</strong>.
-      MCP injects this raw into context. AXON stores it in OCRS and injects a 17-token summary like:<br>
-      <code>Screenshot 1280x800 (180KB) of "ASUS ROG Strix G16" [ref:ax_r_amzn1]</code>
+      A single Wikipedia screenshot is 359KB of PNG = <strong>91,800 tokens</strong> of base64.
+      MCP injects this raw into context. AXON stores it in OCRS and injects a 23-token summary like:<br>
+      <code>Screenshot 1280x800 (359KB) of "HTTP - Wikipedia" [ref:ax_r_wiki1]</code>
     </p>
   </div>
 </section>
@@ -704,29 +706,29 @@
 
     <div style="margin-bottom:24px">
       <div class="context-label">
-        <span><strong>MCP</strong> — 495,029 tokens</span>
-        <span style="color:var(--red);font-weight:700">247% — OVERFLOW</span>
+        <span><strong>MCP</strong> — 271,578 tokens</span>
+        <span style="color:var(--red);font-weight:700">147% — OVERFLOW</span>
       </div>
       <div class="context-window">
         <div class="context-fill overflow" style="width:100%">
-          OVERFLOW: 247.5% of context window
+          OVERFLOW: 146.8% of context window
         </div>
       </div>
       <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">
-        System prompt (8K) + Tool defs (4.9K) + Results (490K) = needs 2.5x the available context
+        System prompt (8K) + Tool defs (4.9K) + Results (267K) = needs 1.5x the available context
       </div>
     </div>
 
     <div>
       <div class="context-label">
-        <span><strong>AXON</strong> — 1,603 tokens</span>
-        <span style="color:var(--green);font-weight:700">0.8% used</span>
+        <span><strong>AXON</strong> — 1,121 tokens</span>
+        <span style="color:var(--green);font-weight:700">0.6% used</span>
       </div>
       <div class="context-window">
-        <div class="context-fill ok" style="width:0.8%;min-width:6px"></div>
+        <div class="context-fill ok" style="width:0.6%;min-width:6px"></div>
       </div>
       <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">
-        System prompt (8K) + Manifests (0.4K) + Summaries (1.2K) = 184K tokens free for conversation
+        System prompt (8K) + Manifests (0.4K) + Summaries (0.7K) = 184K tokens free for conversation
       </div>
     </div>
   </div>
@@ -992,13 +994,13 @@
     <div class="bar-chart">
       <div class="bar-row">
         <div class="bar-label">MCP (JSON-RPC)</div>
-        <div class="bar-track"><div class="bar-fill mcp" style="width:100%">1,929 KB</div></div>
-        <div class="bar-value" style="color:var(--red)">1,929 KB</div>
+        <div class="bar-track"><div class="bar-fill mcp" style="width:100%">1,024 KB</div></div>
+        <div class="bar-value" style="color:var(--red)">1,024 KB</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">AXON (MessagePack)</div>
-        <div class="bar-track"><div class="bar-fill axon" style="width:0.4%;min-width:40px">8 KB</div></div>
-        <div class="bar-value" style="color:var(--green)">8 KB</div>
+        <div class="bar-track"><div class="bar-fill axon" style="width:0.4%;min-width:40px">4 KB</div></div>
+        <div class="bar-value" style="color:var(--green)">4 KB</div>
       </div>
     </div>
   </div>
@@ -1033,17 +1035,17 @@
     <div class="bar-chart">
       <div class="bar-row">
         <div class="bar-label">MCP</div>
-        <div class="bar-track"><div class="bar-fill mcp" style="width:100%">$222,762 / month</div></div>
-        <div class="bar-value" style="color:var(--red)">$222K</div>
+        <div class="bar-track"><div class="bar-fill mcp" style="width:100%">$122,211 / month</div></div>
+        <div class="bar-value" style="color:var(--red)">$122K</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">AXON</div>
-        <div class="bar-track"><div class="bar-fill axon" style="width:0.03%;min-width:50px">$720 / month</div></div>
-        <div class="bar-value" style="color:var(--green)">$720</div>
+        <div class="bar-track"><div class="bar-fill axon" style="width:0.04%;min-width:50px">$504 / month</div></div>
+        <div class="bar-value" style="color:var(--green)">$504</div>
       </div>
     </div>
     <p style="text-align:center;margin-top:16px;color:var(--text-muted);font-size:0.85rem">
-      Savings: <strong style="color:var(--green)">$222,042/month</strong> — 99.7% cost reduction
+      Savings: <strong style="color:var(--green)">$121,707/month</strong> — 99.6% cost reduction
     </p>
   </div>
 </section>
@@ -1207,27 +1209,27 @@ call("scroll", { tabId: 3, direction: "down", amount: 800 })
           <td class="highlight">92% smaller</td>
         </tr>
         <tr>
-          <td>Result tokens (44 calls)</td>
-          <td>490,111</td>
-          <td class="highlight">1,202</td>
-          <td class="highlight">99.8% smaller</td>
-        </tr>
-        <tr>
-          <td>Full session context</td>
-          <td>495,029</td>
-          <td class="highlight">1,603</td>
+          <td>Result tokens (26 calls)</td>
+          <td>266,660</td>
+          <td class="highlight">720</td>
           <td class="highlight">99.7% smaller</td>
         </tr>
         <tr>
+          <td>Full session context</td>
+          <td>271,578</td>
+          <td class="highlight">1,121</td>
+          <td class="highlight">99.6% smaller</td>
+        </tr>
+        <tr>
           <td>Context window fit?</td>
-          <td class="dim">NO (247%)</td>
-          <td class="highlight">YES (0.8%)</td>
-          <td class="highlight">Fits 125x over</td>
+          <td class="dim">NO (147%)</td>
+          <td class="highlight">YES (0.6%)</td>
+          <td class="highlight">Fits 165x over</td>
         </tr>
         <tr>
           <td>Wire size</td>
-          <td>1,929 KB</td>
-          <td class="highlight">8 KB</td>
+          <td>1,024 KB</td>
+          <td class="highlight">4 KB</td>
           <td class="highlight">99.6% smaller</td>
         </tr>
         <tr>
@@ -1256,9 +1258,9 @@ call("scroll", { tabId: 3, direction: "down", amount: 800 })
         </tr>
         <tr>
           <td>Cost (1K sessions/day)</td>
-          <td class="dim">$222K/mo</td>
-          <td class="highlight">$720/mo</td>
-          <td class="highlight">$222K saved</td>
+          <td class="dim">$122K/mo</td>
+          <td class="highlight">$504/mo</td>
+          <td class="highlight">$122K saved</td>
         </tr>
       </tbody>
     </table>

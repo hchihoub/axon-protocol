@@ -32,6 +32,7 @@ import {
 } from "./types.js";
 import {
   MCPToolDefinition,
+  MCPToolAnnotations,
   MCPToolCallParams,
   MCPToolResult,
   MCPRequest,

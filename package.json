@@ -1,0 +1,34 @@
+{
+  "name": "axon-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AXON Protocol — Next-generation tool protocol for AI agents. Out-of-context storage, lazy discovery, capability-based security.",
+  "type": "module",
+  "workspaces": [
+    "sdk",
+    "servers/chrome"
+  ],
+  "scripts": {
+    "test": "cd sdk && npm test",
+    "benchmark": "cd servers/chrome && npx tsx benchmark-real.ts",
+    "dev:chrome": "cd servers/chrome && npm run dev",
+    "mcp": "cd servers/chrome && npm run mcp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AXONprotocol/axon-protocol.git"
+  },
+  "keywords": [
+    "axon",
+    "protocol",
+    "ai",
+    "agent",
+    "mcp",
+    "tools",
+    "browser-automation",
+    "context-window",
+    "ocrs"
+  ],
+  "author": "AXON Protocol Contributors",
+  "license": "MIT"
+}
