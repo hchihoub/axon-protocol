@@ -16,9 +16,7 @@
  *   - "resource:write" required for click/type/navigate
  */
 
-import { AxonServer } from "../../../sdk/src/server.js";
-import { ResultStore } from "../../../sdk/src/ocrs.js";
-import { CapabilityAuthority } from "../../../sdk/src/capability.js";
+import { AxonServer, ResultStore, CapabilityAuthority } from "@axon-protocol/sdk";
 import { BrowserManager } from "./browser.js";
 
 export interface ChromeServerConfig {

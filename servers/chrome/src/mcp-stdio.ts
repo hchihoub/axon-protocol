@@ -23,10 +23,7 @@ import * as readline from "node:readline";
 import { randomUUID, createHash } from "node:crypto";
 import { BrowserManager } from "./browser.js";
 import { createChromeServer } from "./server.js";
-import type { AxonServer } from "../../../sdk/src/server.js";
-import type { ResultStore } from "../../../sdk/src/ocrs.js";
-import type { CapabilityAuthority } from "../../../sdk/src/capability.js";
-import type { ToolSchema, ToolManifest, CallMessage } from "../../../sdk/src/types.js";
+import type { AxonServer, ResultStore, CapabilityAuthority, ToolSchema, ToolManifest, CallMessage } from "@axon-protocol/sdk";
 
 // ============================================================================
 // MCP JSON-RPC Types

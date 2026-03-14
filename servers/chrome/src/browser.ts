@@ -196,7 +196,7 @@ export class BrowserManager {
       if (!element) throw new Error(`Element not found: ${opts.selector}`);
       base64 = (await element.screenshot({ encoding: "base64" })) as string;
     } else {
-      base64 = (await page.screenshot(screenshotOpts)) as string;
+      base64 = (await page.screenshot(screenshotOpts)) as unknown as string;
     }
 
     const viewport = page.viewport();
