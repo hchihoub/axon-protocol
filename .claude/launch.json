@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "blog",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "/Users/houssemchihoub/axon-protocol/blog", "-p", "8090", "-c-1"],
+      "port": 8090
+    }
+  ]
+}

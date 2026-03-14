@@ -1,0 +1,28 @@
+{
+  "name": "@axon-protocol/sdk",
+  "version": "0.1.0",
+  "description": "AXON Protocol SDK — Next-generation tool protocol for AI agents",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "benchmark": "npx tsx ../tests/benchmark.ts",
+    "example": "npx tsx ../examples/filesystem-server.ts"
+  },
+  "keywords": [
+    "axon",
+    "protocol",
+    "ai",
+    "agent",
+    "tools",
+    "mcp-alternative"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0",
+    "vitest": "^3.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@axon-protocol/chrome-server",
+  "version": "0.1.0",
+  "description": "AXON Chrome browser automation server with MCP compatibility",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "axon-chrome": "src/mcp-stdio.ts"
+  },
+  "scripts": {
+    "start": "npx tsx src/index.ts",
+    "mcp": "npx tsx src/mcp-stdio.ts",
+    "dev": "npx tsx --watch src/index.ts"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "tsx": "^4.7.0"
+  }
+}
