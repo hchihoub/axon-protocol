@@ -128,6 +128,15 @@ export class EnvVaultManager {
   // --------------------------------------------------------------------------
 
   /**
+   * Resolve a file path relative to rootDir.
+   * Absolute paths pass through; relative paths resolve from rootDir.
+   */
+  private resolvePath(filePath: string): string {
+    if (filePath.startsWith("/")) return filePath;
+    return join(this.rootDir, filePath);
+  }
+
+  /**
    * Mask a value for display: show first/last char if long enough, else all ****
    */
   private maskValue(value: string): string {
@@ -230,7 +239,7 @@ export class EnvVaultManager {
    * Read an .env file. Values are masked by default.
    */
   async readEnv(filePath: string, showValues?: boolean): Promise<EnvReadResult> {
-    const resolved = resolve(filePath);
+    const resolved = this.resolvePath(filePath);
 
     if (!existsSync(resolved)) {
       throw new Error(`File not found: ${filePath}`);
@@ -258,7 +267,7 @@ export class EnvVaultManager {
    * This is the ONLY method that returns actual values.
    */
   async getEnvValue(filePath: string, key: string): Promise<{ key: string; value: string; path: string; line: number }> {
-    const resolved = resolve(filePath);
+    const resolved = this.resolvePath(filePath);
 
     if (!existsSync(resolved)) {
       throw new Error(`File not found: ${filePath}`);
@@ -284,7 +293,7 @@ export class EnvVaultManager {
    * Set or update a variable in an .env file.
    */
   async setEnvValue(filePath: string, key: string, value: string): Promise<{ key: string; path: string; action: "created" | "updated" }> {
-    const resolved = resolve(filePath);
+    const resolved = this.resolvePath(filePath);
 
     let content = "";
     let action: "created" | "updated" = "created";
@@ -327,7 +336,7 @@ export class EnvVaultManager {
    * Remove a variable from an .env file.
    */
   async deleteEnvValue(filePath: string, key: string): Promise<{ key: string; path: string; deleted: boolean }> {
-    const resolved = resolve(filePath);
+    const resolved = this.resolvePath(filePath);
 
     if (!existsSync(resolved)) {
       throw new Error(`File not found: ${filePath}`);
@@ -408,8 +417,8 @@ export class EnvVaultManager {
    * Compare two .env files (show missing/different keys).
    */
   async compareEnvs(fileA: string, fileB: string): Promise<EnvComparison> {
-    const resolvedA = resolve(fileA);
-    const resolvedB = resolve(fileB);
+    const resolvedA = this.resolvePath(fileA);
+    const resolvedB = this.resolvePath(fileB);
 
     if (!existsSync(resolvedA)) throw new Error(`File not found: ${fileA}`);
     if (!existsSync(resolvedB)) throw new Error(`File not found: ${fileB}`);

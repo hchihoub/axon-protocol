@@ -143,13 +143,17 @@ export function createNetworkScannerServer(
           type: "string",
           description: "Hostname to look up (e.g., 'example.com')",
         },
+        host: {
+          type: "string",
+          description: "Alias for hostname — accepted for consistency with other tools",
+        },
         type: {
           type: "string",
           description: "Record type: A (default), AAAA, MX, TXT, CNAME, NS, SOA",
           enum: ["A", "AAAA", "MX", "TXT", "CNAME", "NS", "SOA"],
         },
       },
-      required: ["hostname"],
+      required: [],
     },
     annotations: {
       read_only: true,
@@ -157,8 +161,12 @@ export function createNetworkScannerServer(
       estimated_latency_ms: 3000,
       max_result_size_bytes: 20_000,
     },
-    handler: async ({ hostname, type }: any) => {
-      return scanner.dnsLookup(hostname, type);
+    handler: async ({ hostname, host, type }: any) => {
+      const resolvedHostname = hostname ?? host;
+      if (!resolvedHostname) {
+        throw new Error("Either 'hostname' or 'host' parameter is required");
+      }
+      return scanner.dnsLookup(resolvedHostname, type);
     },
     summarizer: (result: any) => {
       const count = result.records?.length ?? 0;

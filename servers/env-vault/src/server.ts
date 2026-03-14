@@ -97,12 +97,12 @@ export function createEnvVaultServer(
     input: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
           description: "Path to the .env file",
         },
       },
-      required: ["file"],
+      required: ["path"],
     },
     annotations: {
       read_only: true,
@@ -110,8 +110,8 @@ export function createEnvVaultServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 50_000,
     },
-    handler: async ({ file }: any) => {
-      return manager.readEnv(file, false);
+    handler: async ({ path }: any) => {
+      return manager.readEnv(path, false);
     },
     // SECURITY: Never include values in summary
     summarizer: (result: any) => {
@@ -138,7 +138,7 @@ export function createEnvVaultServer(
     input: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
           description: "Path to the .env file",
         },
@@ -147,7 +147,7 @@ export function createEnvVaultServer(
           description: "Variable name to retrieve",
         },
       },
-      required: ["file", "key"],
+      required: ["path", "key"],
     },
     annotations: {
       read_only: true,
@@ -155,8 +155,8 @@ export function createEnvVaultServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 5000,
     },
-    handler: async ({ file, key }: any) => {
-      return manager.getEnvValue(file, key);
+    handler: async ({ path, key }: any) => {
+      return manager.getEnvValue(path, key);
     },
     // SECURITY: Never include value in summary
     summarizer: (result: any) => {
@@ -178,7 +178,7 @@ export function createEnvVaultServer(
     input: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
           description: "Path to the .env file",
         },
@@ -191,7 +191,7 @@ export function createEnvVaultServer(
           description: "Variable value",
         },
       },
-      required: ["file", "key", "value"],
+      required: ["path", "key", "value"],
     },
     capabilities_required: ["resource:write"],
     annotations: {
@@ -200,9 +200,9 @@ export function createEnvVaultServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 500,
     },
-    handler: async ({ file, key, value }: any) => {
+    handler: async ({ path, key, value }: any) => {
       if (config?.readOnly) throw new Error("Server is in read-only mode");
-      return manager.setEnvValue(file, key, value);
+      return manager.setEnvValue(path, key, value);
     },
     // SECURITY: Never include value in summary
     summarizer: (result: any) => {
@@ -224,7 +224,7 @@ export function createEnvVaultServer(
     input: {
       type: "object",
       properties: {
-        file: {
+        path: {
           type: "string",
           description: "Path to the .env file",
         },
@@ -233,7 +233,7 @@ export function createEnvVaultServer(
           description: "Variable name to remove",
         },
       },
-      required: ["file", "key"],
+      required: ["path", "key"],
     },
     capabilities_required: ["resource:write"],
     annotations: {
@@ -242,9 +242,9 @@ export function createEnvVaultServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 500,
     },
-    handler: async ({ file, key }: any) => {
+    handler: async ({ path, key }: any) => {
       if (config?.readOnly) throw new Error("Server is in read-only mode");
-      return manager.deleteEnvValue(file, key);
+      return manager.deleteEnvValue(path, key);
     },
     summarizer: (result: any) => {
       return result.deleted
@@ -312,16 +312,16 @@ export function createEnvVaultServer(
     input: {
       type: "object",
       properties: {
-        fileA: {
+        path1: {
           type: "string",
           description: "Path to the first .env file",
         },
-        fileB: {
+        path2: {
           type: "string",
           description: "Path to the second .env file",
         },
       },
-      required: ["fileA", "fileB"],
+      required: ["path1", "path2"],
     },
     annotations: {
       read_only: true,
@@ -329,8 +329,8 @@ export function createEnvVaultServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 50_000,
     },
-    handler: async ({ fileA, fileB }: any) => {
-      return manager.compareEnvs(fileA, fileB);
+    handler: async ({ path1, path2 }: any) => {
+      return manager.compareEnvs(path1, path2);
     },
     // SECURITY: Never include values in summary — only key-level diff info
     summarizer: (result: any) => {

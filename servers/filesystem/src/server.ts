@@ -452,8 +452,10 @@ export function createFileSystemServer(
       estimated_latency_ms: 10000,
       max_result_size_bytes: 1_000_000,
     },
-    handler: async ({ pattern, path: searchPath, case_sensitive, max_results, file_pattern }: any) => {
-      return fsm.findText(pattern, searchPath, {
+    handler: async ({ pattern, query, text, path: searchPath, directory, case_sensitive, max_results, file_pattern }: any) => {
+      const searchText = pattern ?? query ?? text;
+      const searchDir = searchPath ?? directory;
+      return fsm.findText(searchText, searchDir, {
         caseSensitive: case_sensitive,
         maxResults: max_results,
         filePattern: file_pattern,

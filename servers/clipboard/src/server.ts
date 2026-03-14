@@ -88,8 +88,12 @@ export function createClipboardServer(
           type: "string",
           description: "Text content to copy to the clipboard",
         },
+        content: {
+          type: "string",
+          description: "Alias for 'text' — text content to copy to the clipboard",
+        },
       },
-      required: ["text"],
+      required: [],
     },
     capabilities_required: ["resource:write"],
     annotations: {
@@ -98,9 +102,13 @@ export function createClipboardServer(
       estimated_latency_ms: 500,
       max_result_size_bytes: 1000,
     },
-    handler: async ({ text }: any) => {
+    handler: async ({ text, content }: any) => {
       if (config?.readOnly) throw new Error("Server is in read-only mode");
-      return cm.setClipboard(text);
+      const value = text ?? content;
+      if (typeof value !== "string" || value.length === 0) {
+        throw new Error("Either 'text' or 'content' must be provided as a non-empty string");
+      }
+      return cm.setClipboard(value);
     },
     summarizer: (entry: any) => {
       return `Copied to clipboard (${entry.length} chars, id: ${entry.id})`;

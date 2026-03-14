@@ -307,8 +307,8 @@ export function createGitRepoServer(
       properties: {
         action: {
           type: "string",
-          description: "Action: 'save', 'pop', 'apply', 'list', or 'drop' (default: 'list')",
-          enum: ["save", "pop", "apply", "list", "drop"],
+          description: "Action: 'save' (or 'push'), 'pop', 'apply', 'list', or 'drop' (default: 'list')",
+          enum: ["save", "push", "pop", "apply", "list", "drop"],
         },
         message: {
           type: "string",
@@ -328,10 +328,12 @@ export function createGitRepoServer(
       max_result_size_bytes: 50_000,
     },
     handler: async ({ action, message, index }: any) => {
-      if (action !== "list" && config?.readOnly) {
+      // Normalize 'push' to 'save' — they are equivalent
+      const normalizedAction = action === "push" ? "save" : (action ?? "list");
+      if (normalizedAction !== "list" && config?.readOnly) {
         throw new Error("Server is in read-only mode");
       }
-      return grm.stash({ action: action ?? "list", message, index });
+      return grm.stash({ action: normalizedAction, message, index });
     },
     summarizer: (result: any) => {
       if (Array.isArray(result)) {
@@ -510,6 +512,10 @@ export function createGitRepoServer(
           type: "string",
           description: "File path to blame (relative to repository root)",
         },
+        file: {
+          type: "string",
+          description: "Alias for 'path' — file path to blame (relative to repository root)",
+        },
         start_line: {
           type: "number",
           description: "Start line number (for limiting range)",
@@ -519,7 +525,6 @@ export function createGitRepoServer(
           description: "End line number (for limiting range)",
         },
       },
-      required: ["path"],
     },
     annotations: {
       read_only: true,
@@ -527,8 +532,10 @@ export function createGitRepoServer(
       estimated_latency_ms: 3000,
       max_result_size_bytes: 2_000_000,
     },
-    handler: async ({ path, start_line, end_line }: any) => {
-      return grm.blame(path, { startLine: start_line, endLine: end_line });
+    handler: async ({ path, file, start_line, end_line }: any) => {
+      const filePath = path ?? file;
+      if (!filePath) throw new Error("Either 'path' or 'file' parameter is required");
+      return grm.blame(filePath, { startLine: start_line, endLine: end_line });
     },
     summarizer: (entries: any[]) => {
       if (!Array.isArray(entries) || entries.length === 0) return "No blame data";
