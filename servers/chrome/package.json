@@ -1,6 +1,6 @@
 {
   "name": "@axon-protocol/chrome-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AXON Chrome browser automation server with MCP compatibility — 15 tools for browser automation with out-of-context result storage",
   "type": "module",
   "main": "dist/index.js",

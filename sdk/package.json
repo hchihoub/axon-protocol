@@ -1,6 +1,6 @@
 {
   "name": "@axon-protocol/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AXON Protocol SDK — Next-generation tool protocol for AI agents with out-of-context storage, lazy discovery, and capability-based security",
   "type": "module",
   "main": "dist/index.js",
