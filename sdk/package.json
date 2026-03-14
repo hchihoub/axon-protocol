@@ -39,12 +39,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/AXONprotocol/axon-protocol.git",
+    "url": "https://github.com/hchihoub/axon-protocol.git",
     "directory": "sdk"
   },
-  "homepage": "https://github.com/AXONprotocol/axon-protocol#readme",
+  "homepage": "https://github.com/hchihoub/axon-protocol#readme",
   "bugs": {
-    "url": "https://github.com/AXONprotocol/axon-protocol/issues"
+    "url": "https://github.com/hchihoub/axon-protocol/issues"
   },
   "author": "AXON Protocol Contributors",
   "license": "MIT",

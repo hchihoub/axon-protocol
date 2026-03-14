@@ -40,10 +40,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/AXONprotocol/axon-protocol.git",
+    "url": "https://github.com/hchihoub/axon-protocol.git",
     "directory": "servers/chrome"
   },
-  "homepage": "https://github.com/AXONprotocol/axon-protocol#readme",
+  "homepage": "https://github.com/hchihoub/axon-protocol#readme",
   "author": "AXON Protocol Contributors",
   "license": "MIT",
   "dependencies": {
